@@ -1,0 +1,47 @@
+<div class="component-wrapper p-2">
+  <div class="card">
+    @if (task()) {
+      <form class="flex flex-col justify-center gap-4">
+        <div class="name">
+          <input
+            placeholder="Task name..."
+            class="inputfield"
+            type="text"
+            [formField]="taskForm.name"
+          />
+          @if (taskForm.name().touched() && taskForm.name().invalid()) {
+            <div class="error-list">
+              @for (error of taskForm.name().errors(); track error) {
+                <em class="form-error-msg">{{ error.message }}</em>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="description">
+          <textarea
+            placeholder="Task description..."
+            class="inputfield"
+            type="text"
+            rows="10"
+            [formField]="taskForm.description"
+          ></textarea>
+        </div>
+
+        <div class="status">
+          <select class="selectfield" [formField]="taskForm.status">
+            <option [selected]="taskEditModel().status === 'todo'" value="todo">To-Do</option>
+            <option [selected]="taskEditModel().status === 'inprogress'" value="inprogress">
+              In-progress
+            </option>
+            <option [selected]="taskEditModel().status === 'done'" value="done">Done</option>
+          </select>
+        </div>
+      </form>
+      <button class="btn-submit" (click)="OnSubmitTask()">Submit edit</button>
+      <button class="btn-delete" (click)="onDeleteTask()">Delete task</button>
+    } @else {
+      <p>No task found</p>
+    }
+  </div>
+</div>

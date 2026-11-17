@@ -7,8 +7,23 @@ export const routes: Routes = [
     loadComponent: () => import('../app/login/login.component').then((m) => m.LoginComponent),
   },
   {
-    path: 'table',
-    loadComponent: () => import('../app/table/table.component').then((m) => m.TableComponent),
-    canActivate: [AuthGuard],
+    path: 'tasks',
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('../app/table/table.component').then((m) => m.TableComponent),
+        canActivate: [AuthGuard],
+      },
+      {
+        path: ':id',
+        loadComponent: () =>
+          import('../app/table/task/task.component').then((m) => m.TaskComponent),
+        canActivate: [AuthGuard],
+      },
+    ],
+  },
+  {
+    path: '**',
+    redirectTo: 'tasks',
   },
 ];

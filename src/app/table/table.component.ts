@@ -1,16 +1,18 @@
 import { Component, computed, inject, input, OnInit, signal } from '@angular/core';
-import { TableService } from './table.service';
+import { TaskService } from './task.service';
 import { Task } from '../core/interfaces/task.manager.interface';
 import { KeyValuePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  providers: [TableService],
+  providers: [TaskService],
   imports: [KeyValuePipe],
 })
 export class TableComponent implements OnInit {
-  private tableService = inject(TableService);
+  private tableService = inject(TaskService);
+  public router = inject(Router);
 
   public tableData = signal<Array<Task> | undefined>(undefined);
   public cols = signal<Array<string>>(['ID', 'Name', 'Status', 'Description']);
@@ -34,7 +36,7 @@ export class TableComponent implements OnInit {
   }
 
   private fetchData() {
-    this.tableService.fetchTableData(this.currentPage(), this.paginatorVal()).subscribe({
+    this.tableService.fetchTasks(this.currentPage(), this.paginatorVal()).subscribe({
       next: (res: { tasks: Array<Task>; datalength: number }) => {
         this.tableData.set(res.tasks);
         this.numberOfPages.set(Math.ceil(res.datalength / this.paginatorVal()));

@@ -12,5 +12,4 @@ import { LoaderService } from './core/services/loader.service';
 })
 export class App {
   public loaderService = inject(LoaderService);
-  //public isLoading = signal<>(false)
 }

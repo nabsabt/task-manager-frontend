@@ -20,14 +20,14 @@ export class LoginComponent implements OnInit {
   public responseError = signal<string | undefined>(undefined);
 
   ngOnInit(): void {
-    this.authService.$isAuthenticated() ? this.router.navigate(['/table']) : '';
+    this.authService.$isAuthenticated() ? this.router.navigate(['/tasks']) : '';
   }
 
   public OnSubmitLogin() {
     this.authService.login(this.loginModel().username, this.loginModel().password).subscribe({
       next: (res) => {
         res.status === 'success'
-          ? this.router.navigate(['/table'])
+          ? this.router.navigate(['/tasks'])
           : this.responseError.set(res.status);
       },
     });
