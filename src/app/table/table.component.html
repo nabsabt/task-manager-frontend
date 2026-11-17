@@ -1,0 +1,116 @@
+<div class="component-wrapper">
+  <div
+    class="m-auto p-2 shadow-md flex flex-col max-h-[85dvh] md:max-h-[50dvh] bg-blue-50 dark:bg-blue-950 rounded-md"
+  >
+    @if (!tableData()) {
+      <h5 class="font-bold text-blue-950 dark:text-blue-50">No table data received!</h5>
+    } @else {
+      <!-- Fixed header section -->
+      <div class="shrink-0">
+        <span class="font-bold text-2xl opacity-50 text-blue-950 dark:text-blue-50">
+          Table of tasks
+        </span>
+        <hr class="mt-2 mb-2 border-t-2 opacity-35 border-blue-700 dark:border-blue-200" />
+      </div>
+
+      <!-- Scrollable table section -->
+      <div
+        class="overflow-auto min-h-0 scrollbar-thumb-neutral-200 scrollbar-track-neutral-400 dark:scrollbar-thumb-neutral-600 dark:scrollbar-track-neutral-800"
+      >
+        <table class="bg-blue-50 dark:bg-blue-950 w-full">
+          <thead>
+            <tr
+              class="sticky top-0 z-100 bg-blue-100 text-blue-900 dark:text-blue-300 dark:bg-blue-900"
+            >
+              @for (col of cols(); track col; let i = $index) {
+                <th
+                  class="p-1 text-md md:text-xl border-b-2 border-blue-900 dark:border-blue-300 text-left"
+                  [style.width]="calculatedColWidth()[i]"
+                >
+                  {{ col }}
+                </th>
+              }
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (row of tableData(); track row; let i = $index) {
+              <tr
+                (click)="onItemSelected(row._id)"
+                [class.bg-blue-100]="i % 2 === 0"
+                [class.dark:bg-slate-600]="i % 2 === 0"
+                [class.bg-blue-200]="i % 2 === 1"
+                [class.dark:bg-slate-700]="i % 2 === 1"
+                class="text-xs md:text-sm cursor-pointer hover:brightness-85 transition duration-300"
+              >
+                @for (item of row | keyvalue: null; track item.key) {
+                  <td class="p-1">{{ item.value }}</td>
+                }
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <!--Paginator-->
+      <div class="pt-2 flex flex-row justify-between">
+        <form class="flex flex-row align-middle gap-1">
+          <label for="countries" class="my-auto text-sm italic">Paginator</label>
+          <select
+            id="countries"
+            class="cursor-pointer bg-blue-100 dark:bg-blue-800 rounded-md block px-1 py-2 shadow-md hover:bg-blue-200 dark:hover:bg-blue-700"
+            (change)="onPaginatorValueSelected($event.target)"
+          >
+            <option [selected]="paginatorVal() === 5" [value]="5">5</option>
+            <option [selected]="paginatorVal() === 10" [value]="10">10</option>
+            <option [selected]="paginatorVal() === 15" [value]="15">15</option>
+            <option [selected]="paginatorVal() === 20" [value]="20">20</option>
+          </select>
+        </form>
+        <div class="flex flex-row align-middle gap-2 w-fit">
+          <em class="my-auto text-blue-400 dark:text-blue-600">Page: {{ currentPage() + 1 }}</em>
+          <button
+            [disabled]="currentPage() < 1"
+            (click)="onPageStep(-1)"
+            class="cursor-pointer rounded-full not-disabled:bg-blue-100 not-disabled:hover:bg-blue-200 not-disabled:active:bg-blue-300 not-disabled:dark:bg-blue-800 not-disabled:dark:hover:bg-blue-700 not-disabled:dark:active:bg-blue-600 disabled:opacity-50 text-center"
+          >
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+              <g id="SVGRepo_iconCarrier">
+                <path
+                  class="dark:stroke-white stroke-black"
+                  d="M6 12H18M6 12L11 7M6 12L11 17"
+                  stroke="#000000"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </g>
+            </svg>
+          </button>
+          <button
+            [disabled]="currentPage() >= numberOfPages() - 1"
+            (click)="onPageStep(1)"
+            class="cursor-pointer rounded-full not-disabled:bg-blue-100 not-disabled:hover:bg-blue-200 not-disabled:active:bg-blue-300 not-disabled:dark:bg-blue-800 not-disabled:dark:hover:bg-blue-700 not-disabled:dark:active:bg-blue-600 disabled:opacity-50 text-center"
+          >
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+              <g id="SVGRepo_iconCarrier">
+                <path
+                  class="dark:stroke-white stroke-black"
+                  d="M6 12H18M18 12L13 7M18 12L13 17"
+                  stroke="#000000"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </g>
+            </svg>
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</div>

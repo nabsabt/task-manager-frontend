@@ -1,3 +1,40 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+@theme{
+  --color-default-bg: #f7f7f7;
+  --color-default-bg-dark: #212328;
+
+  --color-primary-blue: #51bde8;
+  --color-primary-blue-dark: #01005d;
+
+  --color-primary-danger: #d00002;
+  --color-primary-warning: #f7c200;
+}
+
+
+.btn{
+  @apply p-1 border rounded-md cursor-pointer shadow-md hover:shadow-2xl
+}
+
+.btn-nav{
+  @apply  p-1 border rounded-md cursor-pointer  hover:shadow-md hover:opacity-80 border-blue-100 dark:border-blue-900 text-blue-100 dark:text-blue-900 w-20
+}
+
+.btn-submit{
+  @apply p-1 border rounded-md cursor-pointer hover:shadow-md border-2 border-green-200 dark:border-green-700 text-green-100 dark:text-green-800 bg-green-700 dark:bg-green-200  hover:brightness-75
+}
+.inputfield{
+  @apply rounded-md bg-gray-300 h-10 text-gray-700 font-bold p-2 focus:bg-blue-200
+}
+
+.form-error-msg{
+  @apply text-sm text-red-300 dark:text-red-600
+}
+
+.component-wrapper{
+  @apply w-dvw h-dvh flex
+}

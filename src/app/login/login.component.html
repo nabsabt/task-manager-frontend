@@ -1,0 +1,45 @@
+<div class="component-wrapper">
+  <div
+    class="login-container flex flex-col gap-4 p-2 rounded-md w-fit m-auto bg-blue-800 dark:bg-blue-300"
+  >
+    <p class="text-blue-100 dark:text-blue-900 opacity-70 font-bold">Login</p>
+    <hr class="text-blue-300 dark:text-blue-900" />
+    <form class="flex flex-col justify-center gap-4">
+      <div class="username">
+        <input
+          placeholder="Your name..."
+          class="inputfield"
+          type="text"
+          [formField]="loginForm.username"
+        />
+        @if (loginForm.username().touched() && loginForm.username().invalid()) {
+          <div class="error-list">
+            @for (error of loginForm.username().errors(); track error) {
+              <em class="form-error-msg">{{ error.message }}</em>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="password">
+        <input
+          placeholder="Your password..."
+          class="inputfield"
+          type="password"
+          [formField]="loginForm.password"
+        />
+        @if (loginForm.password().touched() && loginForm.password().invalid()) {
+          <div class="error-list">
+            @for (error of loginForm.password().errors(); track error) {
+              <em class="form-error-msg">{{ error.message }}</em>
+            }
+          </div>
+        }
+      </div>
+    </form>
+    <button class="btn-submit" (click)="OnSubmitLogin()">Submit</button>
+    @if (responseError()) {
+      <em class="form-error-msg">{{ responseError() }}</em>
+    }
+  </div>
+</div>
