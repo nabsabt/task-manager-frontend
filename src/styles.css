@@ -45,6 +45,7 @@
   @apply w-dvw h-dvh flex
 }
 
+
 .card{
   @apply md:min-w-[50dvw] min-w-[80dvw] m-auto p-4 rounded-2xl shadow-xl flex flex-col gap-4 justify-baseline bg-blue-100 dark:bg-slate-600
 }
