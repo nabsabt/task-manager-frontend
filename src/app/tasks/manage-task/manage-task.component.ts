@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TaskService } from '../task.service';
 import { Task } from '../../core/interfaces/task.manager.interface';
 import { form, FormField, required } from '@angular/forms/signals';
+import { SocketService } from '../../core/services/socket.service';
 
 @Component({
   selector: 'app-task',
@@ -14,6 +15,7 @@ export class ManageTaskComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
   private taskService = inject(TaskService);
+  private socketService = inject(SocketService);
   private id = signal<string | undefined>(undefined);
   private taskEditModel = signal<Task>({
     _id: undefined,
@@ -34,6 +36,15 @@ export class ManageTaskComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+    /**
+     * If task is deleted meanwhile being edited,
+     * client is navigated back.
+     */
+    this.socketService.socketEvents$.subscribe((event) => {
+      if (event.action === 'delete' && event.data?._id === this.id()) {
+        this.router.navigate(['/tasks']);
+      }
+    });
     this.id()
       ? this.taskService.fetchTaskByID(this.id() as string).subscribe({
           next: (res: { task: Task }) => {

@@ -37,7 +37,6 @@ export class AuthService {
         map((res) => {
           if (res.status === 'success' && res.userData?.loggedInName) {
             this.loggedInUser.set(res.userData?.loggedInName);
-            console.log(`loggedinuser: ${this.loggedInUser()}`);
             localStorage.setItem('loggedInName', res.userData?.loggedInName);
             this.isAuthenticated.set(true);
           }

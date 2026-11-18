@@ -6,3 +6,7 @@
 @if (alertService.$isAlertShown()) {
   <alert></alert>
 }
+
+@if (socketService.showSocketAlert()) {
+  <socket-alert></socket-alert>
+}

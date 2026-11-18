@@ -1,8 +1,9 @@
-import { Component, computed, inject, input, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { TaskService } from './task.service';
 import { Task } from '../core/interfaces/task.manager.interface';
 import { KeyValuePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { SocketService } from '../core/services/socket.service';
 
 @Component({
   selector: 'app-table',
@@ -12,6 +13,8 @@ import { Router } from '@angular/router';
 })
 export class TaskTableComponent implements OnInit {
   private tableService = inject(TaskService);
+  private socketService = inject(SocketService);
+
   public router = inject(Router);
 
   public tableData = signal<Array<Task> | undefined>(undefined);
@@ -31,7 +34,13 @@ export class TaskTableComponent implements OnInit {
     return values.map((ratio) => `${(ratio / totalUnit) * 100}%`);
   });
 
+  constructor() {}
   ngOnInit(): void {
+    this.socketService.socketEvents$.subscribe((event) => {
+      if (event.action === 'delete' && event.data?._id) {
+        this.deleteItemFromTable(event.data._id);
+      }
+    });
     this.fetchData();
   }
 
@@ -44,13 +53,8 @@ export class TaskTableComponent implements OnInit {
     });
   }
 
-  public onItemSelected(id: string) {
-    console.log(`item selected: ${id}`);
-  }
-
   public onPaginatorValueSelected(event: any) {
     const value = Number(event.value) as 5 | 10 | 15 | 20;
-    console.log(`pagination changed to ${value}`);
     this.paginatorVal.set(value);
     this.currentPage.set(0);
     this.fetchData();
@@ -59,5 +63,9 @@ export class TaskTableComponent implements OnInit {
   public onPageStep(step: number) {
     this.currentPage.set(this.currentPage() + step);
     this.fetchData();
+  }
+
+  private deleteItemFromTable(id: string) {
+    this.tableData.update((tasks) => tasks?.filter((task) => task._id !== id));
   }
 }

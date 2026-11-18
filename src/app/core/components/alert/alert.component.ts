@@ -7,10 +7,6 @@ import { AlertService } from '../../services/alert.service';
   imports: [],
   providers: [],
 })
-export class AlertComponent implements OnInit {
-  private alertService = inject(AlertService);
-  public alertText = signal<string>('');
-  ngOnInit(): void {
-    this.alertText.set(this.alertService.alertText());
-  }
+export class AlertComponent {
+  public alertService = inject(AlertService);
 }

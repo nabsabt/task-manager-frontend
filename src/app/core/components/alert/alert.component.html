@@ -1,7 +1,5 @@
-<div class="fixed top-0 left-0 w-dvw h-dvh z-600 flex pointer-events-none">
-  <div
-    class="mx-auto mt-5 p-2 w-fit h-fit rounded-4xl border-2 border-gray-300 text-gray-300 bg-gray-900 animate-[snackbar_5s_ease-in-out_forwards]"
-  >
-    <p>{{ alertText() }}</p>
-  </div>
+<div
+  class="fixed top-5 left-1/2 -translate-x-1/2 z-600 p-2 w-fit rounded-4xl border-2 border-gray-300 text-gray-300 bg-gray-900 animate-[alert_5s_ease-in-out_forwards] pointer-events-none"
+>
+  <p>{{ alertService.alertText() }}</p>
 </div>
