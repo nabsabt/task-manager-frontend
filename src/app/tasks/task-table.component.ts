@@ -40,6 +40,18 @@ export class TaskTableComponent implements OnInit {
       if (event.action === 'delete' && event.data?._id) {
         this.deleteItemFromTable(event.data._id);
       }
+      if (event.action === 'update' && event.data) {
+        const updatedTask: Task = {
+          _id: event.data._id,
+          name: event.data.name,
+          status: event.data.status,
+          description: event.data.description,
+        };
+
+        this.tableData.update((tasks) =>
+          tasks?.map((task) => (task._id === updatedTask._id ? updatedTask : task)),
+        );
+      }
     });
     this.fetchData();
   }

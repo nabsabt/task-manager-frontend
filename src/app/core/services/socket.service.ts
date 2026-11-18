@@ -1,6 +1,6 @@
 import { ApplicationRef, inject, Service, signal } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import { map, Subject, tap } from 'rxjs';
+import { map, Subject } from 'rxjs';
 import { SocketData } from '../interfaces/task.manager.interface';
 
 @Service()
