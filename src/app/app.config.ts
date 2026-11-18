@@ -5,6 +5,8 @@ import { AuthService } from './core/services/auth.service';
 import { AuthGuard } from './auth.guard';
 import { provideSocketIo, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from '../environments/environment';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { AuthInterceptor } from './core/services/auth.interceptor';
 
 const config: SocketIoConfig = { url: environment.apiSocketURL, options: {} };
 
@@ -15,5 +17,6 @@ export const appConfig: ApplicationConfig = {
     provideSocketIo(config),
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
+    provideHttpClient(withInterceptors([AuthInterceptor])),
   ],
 };
