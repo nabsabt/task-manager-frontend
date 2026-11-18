@@ -1,59 +1,52 @@
-# TaskManagerFrontend
+# Task Manager – Client-side
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.7.
+A basic Task Manager Application with real-time data change notification!
 
-## Development server
+---
 
-To start a local development server, run:
+## 📋 General Info
 
-```bash
-ng serve
-```
+| | |
+|---|---|
+| **Framework** | Angular v22.2 |
+| **Socket communication** | ngx-socket-io v4.11.1 |
+| **Styling** | Tailwind CSS v4.1.12 |
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+For responsive navbar/table, my own components were used. Check them here, if want (careful, it's just a playground, do not expect clean-code):
 
-## Code scaffolding
+🔗 [navbar-playground](https://github.com/nabsabt/navbar-playground)
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+---
 
-```bash
-ng generate component component-name
-```
+## 🚀 To Launch the App
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+1. Pull repo.
+2. Run `npm i`.
+3. Run `ng serve` or `npx ng serve` (depending on what you use).
+4. Enjoy!
 
-```bash
-ng generate --help
-```
+---
 
-## Building
+## 📁 Project Structure
 
-To build the project run:
+The folder structure does not follow the popular angular-way. Each folder contains components/files, which has similar purposes:
 
-```bash
-ng build
-```
+| Folder | Description |
+|---|---|
+| **core** | Contains singleton services and components, which are being used independent from what page is being loaded at that moment. |
+| **login** | Contains the login panel only. |
+| **navbar** | Responsive, user-friendly navigation bar, being pulled from my other repo. |
+| **tasks** | Task-table, where tasks are being listed, and manage-task, where task editing/deleting/new task creating happens. |
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+The media content (icons, mostly) is stored in the `/public` folder.
 
-## Running unit tests
+---
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## 🤖 AI Disclosure
 
-```bash
-ng test
-```
+Code is written without AI, but AI helped me in the followings:
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Styling (what colors to use, button style definitions).
+- Configuring the SocketService.
+- Configuring the table template (`keyvalue: null` in `@for` directive was not my idea :( ).
+- Styling this beautiful README.
