@@ -21,12 +21,10 @@ export class SocketService {
         this.socketEvents.next(data);
         this.appRef.tick();
         this.showSocketAlert.set(true);
-        console.log(`websocket  arrived: ${JSON.stringify(data)}`);
         setTimeout(() => {
           this.showSocketAlert.set(false);
         }, 4000);
       }),
-      tap(),
     );
   }
 }

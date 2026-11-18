@@ -1,7 +1,6 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
-import { LoginComponent } from './login/login.component';
 import { CircularLoaderComponent } from './core/components/loader/circular.loader';
 import { LoaderService } from './core/services/loader.service';
 import { AlertService } from './core/services/alert.service';
@@ -13,7 +12,6 @@ import { SocketAlertComponent } from './core/components/socket-alert/socket.aler
   imports: [
     RouterOutlet,
     NavbarComponent,
-    LoginComponent,
     CircularLoaderComponent,
     AlertComponent,
     SocketAlertComponent,
