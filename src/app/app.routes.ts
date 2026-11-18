@@ -11,13 +11,14 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('../app/table/table.component').then((m) => m.TableComponent),
+        loadComponent: () =>
+          import('../app/tasks/task-table.component').then((m) => m.TaskTableComponent),
         canActivate: [AuthGuard],
       },
       {
         path: ':id',
         loadComponent: () =>
-          import('../app/table/task/task.component').then((m) => m.TaskComponent),
+          import('./tasks/manage-task/manage-task.component').then((m) => m.ManageTaskComponent),
         canActivate: [AuthGuard],
       },
     ],

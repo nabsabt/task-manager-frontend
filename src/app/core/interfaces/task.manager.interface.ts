@@ -4,7 +4,7 @@ export interface LoginData {
 }
 
 export interface Task {
-  _id: string;
+  _id: string | undefined;
   name: string;
   status: 'todo' | 'inprogress' | 'done';
   description: string;

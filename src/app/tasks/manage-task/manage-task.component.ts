@@ -6,20 +6,20 @@ import { form, FormField, required } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-task',
-  templateUrl: './task.component.html',
+  templateUrl: './manage-task.component.html',
   imports: [FormField],
   providers: [TaskService],
 })
-export class TaskComponent implements OnInit {
+export class ManageTaskComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
   private taskService = inject(TaskService);
-  private id: string;
+  private id = signal<string | undefined>(undefined);
   private taskEditModel = signal<Task>({
-    _id: '',
+    _id: undefined,
     name: '',
     description: '',
-    status: 'inprogress',
+    status: 'todo',
   });
   public taskForm = form(this.taskEditModel, (schemaPath) => {
     (required(schemaPath.name, { message: 'Some name is required!' }),
@@ -30,38 +30,40 @@ export class TaskComponent implements OnInit {
 
   constructor() {
     this.activatedRoute.params.subscribe((params) => {
-      this.id = params['id'];
+      params['id'] === 'new' ? '' : this.id.set(params['id']);
     });
   }
   ngOnInit(): void {
-    this.taskService.fetchTaskByID(this.id).subscribe({
-      next: (res: { task: Task }) => {
-        this.task.set(res.task);
-        this.taskEditModel.set({
-          _id: this.id,
-          name: res.task.name,
-          description: res.task.description,
-          status: res.task.status,
-        });
-      },
-    });
+    this.id()
+      ? this.taskService.fetchTaskByID(this.id() as string).subscribe({
+          next: (res: { task: Task }) => {
+            this.task.set(res.task);
+            this.taskEditModel.set({
+              _id: this.id() as string,
+              name: res.task.name,
+              description: res.task.description,
+              status: res.task.status,
+            });
+          },
+        })
+      : '';
   }
 
   public OnSubmitTask() {
     this.taskService.postEditedTask(this.taskEditModel()).subscribe({
       next: (res: { status: string }) => {
-        alert(res.status);
         this.router.navigate(['/tasks']);
       },
     });
   }
 
   public onDeleteTask() {
-    this.taskService.deleteTask(this.id).subscribe({
-      next: (res: { status: string }) => {
-        alert(res.status);
-        this.router.navigate(['/tasks']);
-      },
-    });
+    this.id()
+      ? this.taskService.deleteTask(this.id() as string).subscribe({
+          next: (res: { status: string }) => {
+            this.router.navigate(['/tasks']);
+          },
+        })
+      : '';
   }
 }

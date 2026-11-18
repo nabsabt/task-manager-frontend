@@ -15,8 +15,6 @@ export class NavbarComponent {
   public isMobileView = signal<boolean>(false);
   public document = inject(DOCUMENT);
 
-  public loggedInUserName = signal<string | undefined>(undefined);
-
   constructor() {
     this.breakPoint.observe('(max-width: 768px)').subscribe((res) => {
       !res.matches ? this.isHamburgerMenuOpened.set(false) : '';
@@ -33,9 +31,6 @@ export class NavbarComponent {
     } else {
       this.document.body.classList.remove('dark');
     }
-  }
-  ngOnInit(): void {
-    this.loggedInUserName.set(this.authService.$loggedInUser() ?? undefined);
   }
 
   toggleHamburgerMenu() {

@@ -2,6 +2,7 @@
   <div
     class="m-auto p-2 shadow-md flex flex-col max-w-[95dvw] max-h-[85dvh] md:max-h-[50dvh] bg-blue-50 dark:bg-blue-950 rounded-md"
   >
+    <button (click)="router.navigate(['/tasks', 'new'])" class="btn-submit">Add new task</button>
     @if (!tableData()) {
       <h5 class="font-bold text-blue-950 dark:text-blue-50">No table data received!</h5>
     } @else {

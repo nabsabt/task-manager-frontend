@@ -6,11 +6,11 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-table',
-  templateUrl: './table.component.html',
+  templateUrl: './task-table.component.html',
   providers: [TaskService],
   imports: [KeyValuePipe],
 })
-export class TableComponent implements OnInit {
+export class TaskTableComponent implements OnInit {
   private tableService = inject(TaskService);
   public router = inject(Router);
 

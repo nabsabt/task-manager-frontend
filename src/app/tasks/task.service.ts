@@ -4,11 +4,13 @@ import { catchError, finalize, map, Observable, throwError } from 'rxjs';
 import { Task } from '../core/interfaces/task.manager.interface';
 import { environment } from '../../environments/environment';
 import { LoaderService } from '../core/services/loader.service';
+import { AlertService } from '../core/services/alert.service';
 
 @Injectable()
 export class TaskService {
   private readonly http = inject(HttpClient);
   private loaderService = inject(LoaderService);
+  private alert = inject(AlertService);
 
   public fetchTasks(
     page: number,
@@ -24,7 +26,7 @@ export class TaskService {
           return res;
         }),
         catchError((error) => {
-          alert(error.error.message ?? error);
+          this.alert.showAlert(error.error.message ?? error);
           return throwError(() => new Error(error.error.message ?? error));
         }),
         finalize(() => {
@@ -40,7 +42,7 @@ export class TaskService {
         return res;
       }),
       catchError((error) => {
-        alert(error.error.message ?? error);
+        this.alert.showAlert(error.error.message ?? error);
         return throwError(() => new Error(error.error.message ?? error));
       }),
       finalize(() => {
@@ -55,10 +57,11 @@ export class TaskService {
       .post<{ status: string }>(`${environment.apiURL}task/postEditedTask`, { task })
       .pipe(
         map((res: { status: string }) => {
+          this.alert.showAlert(res.status);
           return res;
         }),
         catchError((error) => {
-          alert(error.error.message ?? error);
+          this.alert.showAlert(error.error.message ?? error);
           return throwError(() => new Error(error.error.message ?? error));
         }),
         finalize(() => {
@@ -73,10 +76,11 @@ export class TaskService {
       .delete<{ status: string }>(`${environment.apiURL}task/deleteTask`, { params: { id } })
       .pipe(
         map((res: { status: string }) => {
+          this.alert.showAlert(res.status);
           return res;
         }),
         catchError((error) => {
-          alert(error.error.message ?? error);
+          this.alert.showAlert(error.error.message ?? error);
           return throwError(() => new Error(error.error.message ?? error));
         }),
         finalize(() => {

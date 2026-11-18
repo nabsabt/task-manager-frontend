@@ -3,3 +3,6 @@
 @if (loaderService.$isLoading()) {
   <circular-loader></circular-loader>
 }
+@if (alertService.$isAlertShown()) {
+  <alert></alert>
+}
