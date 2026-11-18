@@ -48,5 +48,5 @@ Code is written without AI, but AI helped me in the followings:
 
 - Styling (what colors to use, button style definitions).
 - Configuring the SocketService.
-- Configuring the table template (`keyvalue: null` in `@for` directive was not my idea :( ).
+- Configuring the table template (`keyvalue: null` in `@for` directive was not my idea 😭 ).
 - Styling this beautiful README.
