@@ -4,13 +4,13 @@ import { Task } from '../core/interfaces/task.manager.interface';
 import { KeyValuePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { SocketService } from '../core/services/socket.service';
-import { StatusPipe } from '../core/pipes/status.pipe';
+import { StatusLabelComponent } from './status-label/status.label.component';
 
 @Component({
   selector: 'app-table',
   templateUrl: './task-table.component.html',
   providers: [TaskService],
-  imports: [KeyValuePipe, StatusPipe],
+  imports: [KeyValuePipe, StatusLabelComponent],
 })
 export class TaskTableComponent implements OnInit {
   private tableService = inject(TaskService);

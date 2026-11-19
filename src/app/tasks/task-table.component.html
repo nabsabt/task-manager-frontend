@@ -45,7 +45,9 @@
                 class="text-xs md:text-sm cursor-pointer hover:brightness-85 transition duration-300"
               >
                 @for (item of row | keyvalue: null; track item.key) {
-                  <td class="p-1" [innerHTML]="item.value | statusPipe"></td>
+                  <td class="p-1">
+                    <status-label [status]="item.value"></status-label>
+                  </td>
                 }
               </tr>
             }
