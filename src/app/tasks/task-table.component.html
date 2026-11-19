@@ -45,33 +45,7 @@
                 class="text-xs md:text-sm cursor-pointer hover:brightness-85 transition duration-300"
               >
                 @for (item of row | keyvalue: null; track item.key) {
-                  <td class="p-1">
-                    <!-- {{ item.value }} -->
-                    @switch (item.value) {
-                      @case ('todo') {
-                        <div class="flex">
-                          <img title="To-do" class="w-10" src="icons/todo-icon.svg" />
-                          <em class="my-auto text-purple-500">To-do</em>
-                        </div>
-                      }
-                      @case ('inprogress') {
-                        <div class="flex">
-                          <img title="In progress" class="w-10" src="icons/inprogress-icon.svg" />
-                          <em class="my-auto text-yellow-500">In-progress</em>
-                        </div>
-                      }
-                      @case ('done') {
-                        <div class="flex">
-                          <img title="Done" class="w-10" src="icons/done-icon.svg" />
-
-                          <em class="my-auto text-green-500">Done</em>
-                        </div>
-                      }
-                      @default {
-                        {{ item.value }}
-                      }
-                    }
-                  </td>
+                  <td class="p-1" [innerHTML]="item.value | statusPipe"></td>
                 }
               </tr>
             }
