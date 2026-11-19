@@ -39,9 +39,8 @@ export class TaskTableComponent implements OnInit {
   ngOnInit(): void {
     this.socketService.socketEvents$.subscribe((event) => {
       if (event.action === 'delete' && event.data?._id) {
-        this.deleteItemFromTable(event.data._id);
-      }
-      if (event.action === 'update' && event.data) {
+        this.tableData.update((tasks) => tasks?.filter((task) => task._id !== event.data?._id));
+      } else if (event.action === 'update' && event.data) {
         const updatedTask: Task = {
           _id: event.data._id,
           name: event.data.name,
@@ -52,6 +51,16 @@ export class TaskTableComponent implements OnInit {
         this.tableData.update((tasks) =>
           tasks?.map((task) => (task._id === updatedTask._id ? updatedTask : task)),
         );
+      } else if (event.action === 'new' && event.data) {
+        const newTask: Task = {
+          _id: event.data._id,
+          name: event.data.name,
+          status: event.data.status,
+          description: event.data.description,
+        };
+        this.tableData.update((tasks) => {
+          return [...(tasks as Task[]), newTask];
+        });
       }
     });
     this.fetchData();
@@ -76,9 +85,5 @@ export class TaskTableComponent implements OnInit {
   public onPageStep(step: number) {
     this.currentPage.set(this.currentPage() + step);
     this.fetchData();
-  }
-
-  private deleteItemFromTable(id: string) {
-    this.tableData.update((tasks) => tasks?.filter((task) => task._id !== id));
   }
 }
