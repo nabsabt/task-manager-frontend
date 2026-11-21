@@ -76,7 +76,7 @@ export class TaskTableComponent implements OnInit {
   }
 
   public onPaginatorValueSelected(event: any) {
-    const value = Number(event.value) as 5 | 10 | 15 | 20;
+    const value = event.value as 5 | 10 | 15 | 20;
     this.paginatorVal.set(value);
     this.currentPage.set(0);
     this.fetchData();

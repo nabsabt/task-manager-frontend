@@ -4,6 +4,7 @@ import { TaskService } from '../task.service';
 import { Task } from '../../core/interfaces/task.manager.interface';
 import { form, FormField, required } from '@angular/forms/signals';
 import { SocketService } from '../../core/services/socket.service';
+import { AlertService } from '../../core/services/alert.service';
 
 @Component({
   selector: 'app-task',
@@ -13,6 +14,7 @@ import { SocketService } from '../../core/services/socket.service';
 })
 export class ManageTaskComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
+  private alertService = inject(AlertService);
   private router = inject(Router);
   private taskService = inject(TaskService);
   private socketService = inject(SocketService);
@@ -61,11 +63,15 @@ export class ManageTaskComponent implements OnInit {
   }
 
   public OnSubmitTask() {
-    this.taskService.postEditedTask(this.taskEditModel()).subscribe({
-      next: (res: { status: string }) => {
-        this.router.navigate(['/tasks']);
-      },
-    });
+    if (this.taskForm().invalid()) {
+      this.alertService.showAlert('Please fill every required field!');
+    } else {
+      this.taskService.postEditedTask(this.taskEditModel()).subscribe({
+        next: (res: { status: string }) => {
+          this.router.navigate(['/tasks']);
+        },
+      });
+    }
   }
 
   public onDeleteTask() {
